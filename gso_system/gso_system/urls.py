@@ -25,4 +25,5 @@ urlpatterns = [
     path('', lambda request: redirect('login'), name='home'),
 
     path('gso_office/', include('gso_office.urls')),
+    path('', include('requests.urls')),
 ]

@@ -17,3 +17,10 @@ def role_redirect(request):
         return redirect('employee-dashboard')
     else:
         return redirect('login')
+
+
+def employee_management(request):
+    return render(request, 'employee/employee_management.html')
+
+def account_management(request):
+    return render(request, 'accounts/account_management.html')
