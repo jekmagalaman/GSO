@@ -1,0 +1,157 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{% block title %}Unit Head Dashboard – Request Management{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'css/gso_dashboard.css' %}" />
+</head>
+<body>
+    <div class="sidebar" id="sidebar">
+        <div class="logo-section">
+            <div class="logo">
+                <img src="{% static 'images/gso_logo.png' %}" alt="General Services Office Logo">
+            </div>
+            <span class="logo-label" style="font-weight: 600;">GSO</span>
+            <div class="hamburger" id="sidebarToggle">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div>
+        </div>
+    
+        <div class="nav-menu">
+            <a href="{% url 'unit_head_dashboard' %}" class="nav-link">
+                <div class="nav-item">
+                    <div class="nav-icon">
+                        <img src="{% static 'images/request_icon.png' %}" alt="Request Management">
+                    </div>
+                    <span class="nav-label">Request Management</span>
+                </div>
+            </a>
+    
+            <a href="{% url 'unit_head_inventory' %}" class="nav-link">
+                <div class="nav-item active">
+                    <div class="nav-icon">
+                        <img src="{% static 'images/unit_head/inventory_icon.png' %}" alt="Accomplishment Report">
+                    </div>
+                    <span class="nav-label">Inventory</span>
+                </div>
+            </a>
+    
+            <a href="{% url 'unit_head_request_history' %}" class="nav-link">
+                <div class="nav-item">
+                    <div class="nav-icon">
+                        <img src="{% static 'images/unit_head/request_history.png' %}" alt="Employee Management">
+                    </div>
+                    <span class="nav-label">Requests History</span>
+                </div>
+            </a>
+        </div>
+    
+        <div class="user-section">
+            <div class="user-avatar">
+                {{ user.first_name|default:user.username|slice:":2"|upper }}
+            </div>
+            <div class="user-info">
+                <div class="user-name nav-label">{{ user.get_full_name|default:user.username }}</div>
+                <div class="user-role nav-label">{{ user_role }}</div>
+            </div>
+    
+            <div class="logout-icon">
+                <form method="post" action="{% url 'logout' %}" style="display: inline;">
+                    {% csrf_token %}
+                    <button type="submit" style="background: none; border: none; color: inherit; cursor: pointer;">
+                        <img src="{% static 'images/logout.png' %}" alt="Logout">
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+
+<div class="main-content">
+    <div class="header">
+        <h1 class="page-title">INVENTORY</h1>
+        <input type="text" class="search-bar" placeholder="Search...">
+    </div>
+
+    <div class="table-container">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>REQUEST ID</th>
+                    <th>REQUESTING OFFICE</th>
+                    <th>REQUEST TYPE</th>
+                    <th>DATE SUBMITTED</th>
+                    <th>STATUS</th>
+                    <th>ASSIGNED PERSONNEL</th>
+                    <th>ACTIONS</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>02-105</td>
+                    <td>College of Sciences</td>
+                    <td>Maintenance</td>
+                    <td>2025-02-22</td>
+                    <td><span class="status-badge status-pending">● Pending</span></td>
+                    <td>John Alexis Rica</td>
+                    <td><button class="action-btn">Open</button></td>
+                </tr>
+                <tr>
+                    <td>02-106</td>
+                    <td>College of Business and Accountancy</td>
+                    <td>Electrical</td>
+                    <td>2025-02-19</td>
+                    <td><span class="status-badge status-approved">● Approved</span></td>
+                    <td>John Chris Gaite</td>
+                    <td><button class="action-btn">Open</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    // Highlight active nav
+    document.querySelectorAll('.nav-item').forEach(item => {
+        item.addEventListener('click', function () {
+            document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
+            this.classList.add('active');
+        });
+    });
+
+    // Search bar filter
+    document.querySelector('.search-bar').addEventListener('input', function (e) {
+        const searchTerm = e.target.value.toLowerCase();
+        const rows = document.querySelectorAll('.table tbody tr');
+
+        rows.forEach(row => {
+            const text = row.textContent.toLowerCase();
+            row.style.display = text.includes(searchTerm) ? '' : 'none';
+        });
+    });
+
+    // Open action button
+    document.querySelectorAll('.action-btn').forEach(btn => {
+        btn.addEventListener('click', function () {
+            const row = this.closest('tr');
+            const requestId = row.cells[0].textContent;
+            alert(`Opening request ${requestId}`);
+        });
+    });
+
+    // Sidebar toggle functionality
+    const sidebarToggle = document.getElementById('sidebarToggle');
+    const sidebar = document.getElementById('sidebar');
+
+    sidebarToggle.addEventListener('click', () => {
+        sidebar.classList.toggle('hidden');
+    });
+
+    
+</script>
+</body>
+</html>

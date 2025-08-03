@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'inventory',
     'reports',
     'gso_office',
+    'unit_heads',
 ]
 
 MIDDLEWARE = [
@@ -142,9 +143,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 
-LOGIN_REDIRECT_URL = '/accounts/redirect/'
+LOGIN_REDIRECT_URL = '/accounts/redirect/'  # ✅ KEEP ONLY THIS
 LOGIN_URL = '/accounts/login/'
 LOGOUT_REDIRECT_URL = '/accounts/login/'
-
-
-LOGIN_REDIRECT_URL = '/gso_office/'
