@@ -6,8 +6,9 @@ body {
     height: 100vh;
     margin: 0;
     font-family: Arial, sans-serif;
-}
-.login-container {
+  }
+
+  .login-container {
     background-color: #f0f0f0;
     border-radius: 10px;
     padding: 30px 25px;
@@ -15,46 +16,55 @@ body {
     text-align: center;
     max-width: 320px;
     width: 100%;
-}
-.login-container img {
+  }
+
+  .login-container img {
     width: 80px;
     height: auto;
-}
-.login-container h2 {
+  }
+
+  .login-container h2 {
     margin: 15px 0 5px;
     color: #003366;
-}
-.login-container p {
+  }
+
+  .login-container p {
     margin: 5px 0 20px;
     color: #666;
-}
-.login-container input[type="text"],
-.login-container input[type="password"] {
+  }
+
+  .login-container input[type="text"],
+  .login-container input[type="password"] {
     width: 100%;
     padding: 10px;
     margin: 8px 0;
     border: 1px solid #ccc;
     border-radius: 5px;
-}
-.options {
+  }
+
+  .options {
     display: flex;
     justify-content: space-between;
     align-items: center;
     font-size: 14px;
     margin: 10px 0;
-}
-.options label {
+  }
+
+  .options label {
     display: flex;
     align-items: center;
-}
-.options input[type="checkbox"] {
+  }
+
+  .options input[type="checkbox"] {
     margin-right: 5px;
-}
-.options a {
+  }
+
+  .options a {
     text-decoration: none;
     color: #003366;
-}
-.login-container button {
+  }
+
+  .login-container button {
     width: 50%;
     background-color: #003366;
     color: #fff;
@@ -64,12 +74,43 @@ body {
     margin-top: 10px;
     cursor: pointer;
     font-weight: bold;
-}
-.login-container button:hover {
+  }
+
+  .login-container button:hover {
     background-color: #002244;
-}
-.error-msg {
+  }
+
+  .error-msg {
     color: red;
     margin-top: 10px;
     font-size: 14px;
-}
+  }
+
+  /* Responsive Adjustments */
+  @media (max-width: 400px) {
+    .login-container {
+      padding: 20px 15px;
+      max-width: 95%;
+    }
+
+    .login-container h2 {
+      font-size: 20px;
+    }
+
+    .login-container p {
+      font-size: 14px;
+    }
+
+    .login-container button {
+      width: 100%;
+    }
+
+    .options {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .options a {
+      margin-top: 5px;
+    }
+  }
