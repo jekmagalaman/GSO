@@ -56,7 +56,7 @@
             </div>
             <div class="user-info">
                 <div class="user-name nav-label">{{ user.get_full_name|default:user.username }}</div>
-                <div class="user-role nav-label">{{ user_role }}</div>
+                <div class="user-role nav-label">{{ user.role }}</div>
             </div>
     
             <div class="logout-icon">
@@ -115,7 +115,6 @@
 </div>
 
 <script>
-    // Highlight active nav
     document.querySelectorAll('.nav-item').forEach(item => {
         item.addEventListener('click', function () {
             document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
@@ -123,7 +122,6 @@
         });
     });
 
-    // Search bar filter
     document.querySelector('.search-bar').addEventListener('input', function (e) {
         const searchTerm = e.target.value.toLowerCase();
         const rows = document.querySelectorAll('.table tbody tr');
@@ -134,7 +132,6 @@
         });
     });
 
-    // Open action button
     document.querySelectorAll('.action-btn').forEach(btn => {
         btn.addEventListener('click', function () {
             const row = this.closest('tr');
@@ -143,7 +140,6 @@
         });
     });
 
-    // Sidebar toggle functionality
     const sidebarToggle = document.getElementById('sidebarToggle');
     const sidebar = document.getElementById('sidebar');
 
