@@ -25,7 +25,7 @@
             <a href="{% url 'gso_dashboard' %}" class="nav-link">
                 <div class="nav-item active">
                     <div class="nav-icon">
-                        <img src="{% static 'images/request_icon.png' %}" alt="Request Management">
+                        <img src="{% static 'images/gso_office/request_icon.png' %}" alt="Request Management">
                     </div>
                     <span class="nav-label">Request Management</span>
                 </div>
@@ -34,7 +34,7 @@
             <a href="{% url 'accomplishment_report' %}" class="nav-link">
                 <div class="nav-item">
                     <div class="nav-icon">
-                        <img src="{% static 'images/report_icon.png' %}" alt="Accomplishment Report">
+                        <img src="{% static 'images/gso_office/report_icon.png' %}" alt="Accomplishment Report">
                     </div>
                     <span class="nav-label">Accomplishment Report</span>
                 </div>
@@ -43,7 +43,7 @@
             <a href="{% url 'employee_management' %}" class="nav-link">
                 <div class="nav-item">
                     <div class="nav-icon">
-                        <img src="{% static 'images/employee_icon.png' %}" alt="Employee Management">
+                        <img src="{% static 'images/gso_office/employee_icon.png' %}" alt="Employee Management">
                     </div>
                     <span class="nav-label">Employee Management</span>
                 </div>
@@ -52,7 +52,7 @@
             <a href="{% url 'account_management' %}" class="nav-link">
                 <div class="nav-item">
                     <div class="nav-icon">
-                        <img src="{% static 'images/account_icon.png' %}" alt="Account Management">
+                        <img src="{% static 'images/gso_office/account_icon.png' %}" alt="Account Management">
                     </div>
                     <span class="nav-label">Account Management</span>
                 </div>
@@ -72,7 +72,7 @@
                 <form method="post" action="{% url 'logout' %}" style="display: inline;">
                     {% csrf_token %}
                     <button type="submit" style="background: none; border: none; color: inherit; cursor: pointer;">
-                        <img src="{% static 'images/gso_office/logout.png' %}" alt="Logout">
+                        <img src="{% static 'images/logout.png' %}" alt="Logout">
                     </button>
                 </form>
             </div>
