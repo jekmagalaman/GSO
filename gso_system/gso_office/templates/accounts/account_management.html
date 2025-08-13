@@ -1,151 +1,41 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>{% block title %}GSO Dashboard – Request Management{% endblock %}</title>
-  <link rel="stylesheet" href="{% static 'css/gso_dashboard.css' %}" />
-</head>
-<body>
-<div class="sidebar">
-    <div class="logo-section">
-        <div class="logo">
-          <img src="{% static 'images/gso_logo.png' %}" alt="General Services Office Logo">
-        </div>
-        <span style="font-weight: 600;">GSO</span>
-        <div class="hamburger">
-            <div style="width: 20px; height: 2px; background: white; margin: 3px 0;"></div>
-            <div style="width: 20px; height: 2px; background: white; margin: 3px 0;"></div>
-            <div style="width: 20px; height: 2px; background: white; margin: 3px 0;"></div>
-        </div>
-    </div>
+{% extends "gso_base_dashboard.html" %}
 
-    <div class="nav-menu">
+{% block title %}Account Management{% endblock %}
 
-        <a href="{%url 'gso_dashboard' %}" class="nav-link">
-            <div class="nav-item">
-                <div class="nav-icon">
-                    <img src="{% static 'images/gso_office/request_icon.png' %}" alt="Request Management">
-                </div>
-                <span>Request Management</span>
-            </div>
-        </a>
-
-        <a href="{%url 'accomplishment_report' %}" class="nav-link">
-            <div class="nav-item">
-                <div class="nav-icon">
-                    <img src="{% static 'images/gso_office/report_icon.png' %}" alt="Request Management">
-                </div>
-                    <span>Accomplishment Report</span>
-            </div>
-        </a>
-
-        <a href="{%url 'employee_management' %}" class="nav-link">
-            <div class="nav-item">
-                <div class="nav-icon">
-                    <img src="{% static 'images/gso_office/employee_icon.png' %}" alt="Request Management">
-                </div>
-                <span>Employee Management</span>
-            </div>
-        </a>
-
-        <a href="{%url 'account_management' %}" class="nav-link">
-            <div class="nav-item active">
-                <div class="nav-icon">
-                    <img src="{% static 'images/gso_office/account_icon.png' %}" alt="Request Management">
-                </div>
-                <span>Account Management</span>
-            </div>
-        </a>
-
-    </div>
-
-    <div class="user-section">
-        <div class="user-avatar">
-            {{ user.first_name|default:user.username|slice:":2"|upper }}
-        </div>
-        <div class="user-info">
-            <div class="user-name">{{ user.get_full_name|default:user.username }}</div>
-            <div class="user-role">{{ user.role }}</div>
-        </div>
-    
-        <div class="logout-icon" style="margin-left: auto; cursor: pointer;">
-            <form method="post" action="{% url 'logout' %}" style="display: inline;">
-                {% csrf_token %}
-                <button type="submit" style="background: none; border: none; color: inherit; cursor: pointer;">
-                    <img src="{% static 'images/logout.png' %}" alt="Logout">
-                </button>
-            </form>
-        </div>
-    </div>
-    
+{% block main_content %}
+<div class="header">
+    <h1 class="page-title">ACCOUNT MANAGEMENT</h1>
+    <input type="text" class="search-bar" placeholder="Search...">
 </div>
 
-<div class="main-content">
-    <div class="header">
-        <h1 class="page-title">ACCOUNT MANAGEMENT</h1>
-        <input type="text" class="search-bar" placeholder="Search...">
-    </div>
-
-    <div class="table-container">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>NO.</th>
-                    <th>FULL NAME</th>
-                    <th>DEPARTMENT</th>
-                    <th>ROLE</th>
-                    <th>ACTION</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for user in users %}
-                <tr>
-                    <td>{{ forloop.counter }}</td>
-                    <td>{{ user.get_full_name }}</td>  <!-- or user.first_name + " " + user.last_name -->
-                    <td>{{ user.department }}</td>      <!-- Make sure the field exists -->
-                    <td>{{ user.role }}</td>
-                    <td><button class="action-btn">Update</button></td>
-                </tr>
-                {% empty %}
-                <tr>
-                    <td colspan="5">No users found.</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
+<div class="table-container">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>NO.</th>
+                <th>FULL NAME</th>
+                <th>ROLE</th>
+                <th>UNIT</th>
+                <th>ACTION</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ user.get_full_name }}</td>
+                <td>{{ user.get_role_display }}</td>
+                <td>{{ user.unit }}</td>
+                <td>
+                    <a href="{% url 'edit_user' user.id %}" class="btn btn-sm btn-primary">Edit</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5">No users found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 </div>
-
-<script>
-
-    document.querySelectorAll('.nav-item').forEach(item => {
-        item.addEventListener('click', function() {
-            document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
-            this.classList.add('active');
-        });
-    });
-
-
-    document.querySelector('.search-bar').addEventListener('input', function(e) {
-        const searchTerm = e.target.value.toLowerCase();
-        const rows = document.querySelectorAll('.table tbody tr');
-        
-        rows.forEach(row => {
-            const text = row.textContent.toLowerCase();
-            row.style.display = text.includes(searchTerm) ? '' : 'none';
-        });
-    });
-
-
-    document.querySelectorAll('.action-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
-            const row = this.closest('tr');
-            const requestId = row.cells[0].textContent;
-            alert(`Opening request ${requestId}`);
-        });
-    });
-</script>
-</body>
-</html>
+{% endblock %}

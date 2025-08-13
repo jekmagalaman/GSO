@@ -28,4 +28,6 @@ urlpatterns = [
     path('', include('requests.urls')),
 
     path('unit-head/', include('unit_heads.urls')),
+
+    path('personnel/', include('personnel.urls')),
 ]

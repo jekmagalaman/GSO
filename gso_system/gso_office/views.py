@@ -1,5 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required, user_passes_test
+from django.contrib.auth import get_user_model
+from .forms import UserEditForm
+
+from .models import Request
+
+
 
 # Optional: check if user is GSO role
 def is_gso(user):
@@ -8,17 +14,17 @@ def is_gso(user):
 @login_required
 @user_passes_test(is_gso)  # optional, only allow GSO users
 
-def gso_dashboard(request):
+def request_management(request):
     context = {
-        'user_role': request.user.role  # OR request.user.profile.role depending on your model
+        'user_role': request.user.role  
     }
-    return render(request, 'dashboard/gso_dashboard.html')
+    return render(request, 'request_management/request_management.html')
 
 def accomplishment_report(request):
     return render(request, 'accomplishment_report/accomplishment_report.html')
 
-def employee_management(request):
-    return render(request, 'employee/employee_management.html')
+def gso_inventory(request):
+    return render(request, 'inventory/gso_inventory.html')
 
 def account_management(request):
     return render(request, 'accounts/account_management.html')
@@ -26,4 +32,30 @@ def account_management(request):
 
 
 
+User = get_user_model()
 
+def account_view(request):
+    users = User.objects.all()
+    return render(request, 'accounts/account_management.html', {'users': users})
+
+
+def edit_user(request, user_id):
+    user = get_object_or_404(User, id=user_id)
+    
+    if request.method == 'POST':
+        form = UserEditForm(request.POST, instance=user)
+        if form.is_valid():
+            form.save()
+            return redirect('account_management')  # Go back to the list
+    else:
+        form = UserEditForm(instance=user)
+    
+    return render(request, 'accounts/account_edit.html', {'form': form, 'user': user})
+
+
+
+
+
+def request_detail(request, request_id):
+    request_obj = get_object_or_404(Request, id=request_id)
+    return render(request, 'request_detail.html', {'request_obj': request_obj})

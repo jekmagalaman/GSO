@@ -7,5 +7,5 @@ urlpatterns = [
     path('logout/', LogoutView.as_view(next_page='login'), name='logout'),
     path('redirect/', views.role_redirect, name='role-redirect'),
 
-    path('manage/', views.account_management, name='account-management'),
+    
 ]

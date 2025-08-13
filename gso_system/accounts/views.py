@@ -1,10 +1,8 @@
-from django.shortcuts import render
-
-from django.shortcuts import redirect
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import get_user_model
 
-from .models import User
-
+User = get_user_model()
 
 @login_required
 def role_redirect(request):
@@ -21,7 +19,3 @@ def role_redirect(request):
         return redirect('login')
 
 
-def account_management(request):
-    users = User.objects.all()
-    print("Users:", users)
-    return render(request, 'accounts/account_management.html', {'users': users})
