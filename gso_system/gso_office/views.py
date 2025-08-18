@@ -3,7 +3,6 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth import get_user_model
 from .forms import UserEditForm
 
-from .models import Request
 
 
 
@@ -56,6 +55,3 @@ def edit_user(request, user_id):
 
 
 
-def request_detail(request, request_id):
-    request_obj = get_object_or_404(Request, id=request_id)
-    return render(request, 'request_detail.html', {'request_obj': request_obj})
