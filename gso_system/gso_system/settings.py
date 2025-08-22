@@ -41,9 +41,8 @@ INSTALLED_APPS = [
     'requests',
     'inventory',
     'reports',
-    'gso_office',
-    'unit_heads',
-    'personnel',    
+    'personnel',
+    'requestor',
 ]
 
 MIDDLEWARE = [

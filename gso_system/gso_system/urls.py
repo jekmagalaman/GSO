@@ -24,10 +24,11 @@ urlpatterns = [
     path('accounts/', include('accounts.urls')),
     path('', lambda request: redirect('login'), name='home'),
 
-    path('gso_office/', include('gso_office.urls')),
     path('', include('requests.urls')),
 
-    path('unit-head/', include('unit_heads.urls')),
+    path('requests/', include('requests.urls')),
 
-    path('personnel/', include('personnel.urls')),
+    path('inventory/', include('inventory.urls')),
+
+    path('reports/', include('reports.urls')),
 ]

@@ -1,3 +1,26 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib.auth.decorators import login_required, user_passes_test
+from django.contrib.auth import get_user_model
 
-# Create your views here.
+#GSO Office Views
+def is_gso(user):
+    return user.is_authenticated and user.role == 'gso'
+
+@login_required
+@user_passes_test(is_gso)
+def request_management(request):
+    context = {
+        'user_role': request.user.role  
+    }
+    return render(request, 'gso_office/request_management/request_management.html')
+
+
+
+#Unit Head Views
+@login_required
+def unit_head_request_management(request):
+    return render(request, "unit_heads/unit_head_request_management/unit_head_request_management.html")
+
+@login_required
+def unit_head_request_history(request):
+    return render(request, 'unit_heads/unit_head_request_history/unit_head_request_history.html')
